@@ -1,6 +1,6 @@
 <template>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand" href="index.html">BON PARRAINAGE</a>
         <button
             class="btn btn-link btn-sm order-1 order-lg-0"
             id="sidebarToggle"
@@ -39,7 +39,7 @@
                     aria-haspopup="true"
                     aria-expanded="false"
                     ><i class="fas fa-user fa-fw"></i
-                ></a>
+                > {{ $store.state.profile.name }}</a>
                 <div
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="userDropdown"
@@ -47,9 +47,20 @@
                     <a class="dropdown-item" href="#">Settings</a>
                     <a class="dropdown-item" href="#">Activity Log</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="login.html">Logout</a>
+                    <button class="dropdown-item" v-on:click="logout">Logout</button>
                 </div>
             </li>
         </ul>
     </nav>
 </template>
+<script>
+import * as auth from '../services/auth_service';
+export default {
+    methods : {
+        logout : async function(){
+            auth.logout();
+            this.$router.push('/login');
+        }
+    }
+}
+</script>

@@ -43,6 +43,10 @@ class AuthController extends Controller
     }
 
     public function login(Request $request){
+        $validatedData = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
         /*return response()->json([
             'message' => 'Unauthorized',
             'status_code' => 401
@@ -57,7 +61,7 @@ class AuthController extends Controller
 
        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password]) ){
            return response()->json([
-               'message' => 'Unauthorized',
+               'message' => 'Invalid username/password',
                'status_code' => 401
            ], 401);
        }
@@ -67,10 +71,10 @@ class AuthController extends Controller
 
        if ( $user->role == "admin"){
         
-            $tokenData = $user->createToken('Personal Acces Token', ['do_anything']);
+            $tokenData = $user->createToken('Personal Acces Token', ['admin']);
             //return response()->json($tokenData, 200);
        }else{
-            $tokenData = $user->createToken('Personal Acces Token', ['can_use']);
+            $tokenData = $user->createToken('Personal Acces Token', ['user']);
        }
 
        $token = $tokenData->token;
@@ -107,6 +111,19 @@ class AuthController extends Controller
                'status_code' => 200
 
         ], 200);
+
+
+    }
+    public function profile(Request $request){
+        if ($request->user()){
+            return response()->json($request->user(), 200);
+        }
+        return response()->json([
+            'message'=> 'utilisateur non connectee ',
+               'status_code' => 500
+
+        ], 500);
+        
 
 
     }

@@ -133,6 +133,8 @@ export default {
         register : async function(){
             try {
                 await auth.register(this.user);
+                this.errors = {};
+                this.$router.push('/login');
             } catch (error) {
                 console.log(error);
                 switch(error.response.status){

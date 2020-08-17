@@ -20,6 +20,7 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('logout','AuthController@logout');
+        Route::get('profile','AuthController@profile');
     });
 
 });
@@ -46,3 +47,4 @@ Route::group(['prefix' => 'user'], function () {
 });
 
 Route::resource('produits', 'ProduitsController');
+Route::resource('categories', 'CategoriesController');

@@ -126,6 +126,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Register',
@@ -152,51 +155,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["default"].register(this.user);
+                return _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["register"](this.user);
 
               case 3:
-                _context.next = 18;
+                this.errors = {};
+                this.$router.push('/login');
+                _context.next = 21;
                 break;
 
-              case 5:
-                _context.prev = 5;
+              case 7:
+                _context.prev = 7;
                 _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
                 _context.t1 = _context.t0.response.status;
-                _context.next = _context.t1 === 422 ? 10 : _context.t1 === 500 ? 12 : _context.t1 === 201 ? 14 : 16;
+                _context.next = _context.t1 === 422 ? 13 : _context.t1 === 500 ? 15 : _context.t1 === 201 ? 17 : 19;
                 break;
 
-              case 10:
+              case 13:
                 this.errors = _context.t0.response.data.errors;
-                return _context.abrupt("break", 18);
+                return _context.abrupt("break", 21);
 
-              case 12:
+              case 15:
                 this.flashMessage.error({
                   message: _context.t0.response.data.message,
                   time: 5000
                 });
-                return _context.abrupt("break", 18);
+                return _context.abrupt("break", 21);
 
-              case 14:
+              case 17:
                 this.flashMessage.success({
                   message: _context.t0.response.data.message,
                   time: 5000
                 });
-                return _context.abrupt("break", 18);
+                return _context.abrupt("break", 21);
 
-              case 16:
+              case 19:
                 //alert('somme error');
                 this.flashMessage.error({
                   message: 'un probleme de connexion ...',
                   time: 5000
                 });
-                return _context.abrupt("break", 18);
+                return _context.abrupt("break", 21);
 
-              case 18:
+              case 21:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 5]]);
+        }, _callee, this, [[0, 7]]);
       }));
 
       function register() {
@@ -269,7 +275,13 @@ var render = function() {
                           _vm.$set(_vm.user, "name", $event.target.value)
                         }
                       }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.name
+                      ? _c("div", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.name[0]))
+                        ])
+                      : _vm._e()
                   ])
                 ])
               ]),
@@ -309,7 +321,13 @@ var render = function() {
                       _vm.$set(_vm.user, "email", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors.email
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(_vm._s(_vm.errors.email[0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-row" }, [
@@ -348,7 +366,13 @@ var render = function() {
                           _vm.$set(_vm.user, "password", $event.target.value)
                         }
                       }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.password
+                      ? _c("div", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.password[0]))
+                        ])
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -458,57 +482,6 @@ var staticRenderFns = [
 render._withStripped = true
 
 
-
-/***/ }),
-
-/***/ "./resources/js/services/auth_service.js":
-/*!***********************************************!*\
-  !*** ./resources/js/services/auth_service.js ***!
-  \***********************************************/
-/*! exports provided: register */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "register", function() { return register; });
-/* harmony import */ var _services_http_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/http_service */ "./resources/js/services/http_service.js");
-
-function register(user) {
-  //console.log(data);
-  return Object(_services_http_service__WEBPACK_IMPORTED_MODULE_0__["http"])().post('api/auth/register', user);
-}
-
-/***/ }),
-
-/***/ "./resources/js/services/http_service.js":
-/*!***********************************************!*\
-  !*** ./resources/js/services/http_service.js ***!
-  \***********************************************/
-/*! exports provided: http, httpFile */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "http", function() { return http; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "httpFile", function() { return httpFile; });
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function http() {
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
-    baseURL: 'http://localhost:8000'
-  });
-}
-function httpFile() {
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
-    baseURL: _store__WEBPACK_IMPORTED_MODULE_0__["default"].state.apiURL,
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
-}
 
 /***/ }),
 

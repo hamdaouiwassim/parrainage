@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-
+import * as auth from './services/auth_service';
 
 
 Vue.use(Router);
 const routes = [
     {
         path:'/home',
-        name:'home',
+        
         component : Home ,
         children :[
             {
@@ -20,9 +20,21 @@ const routes = [
                 path:'produits',
                 name:'produits',
                 component : ()=> import('./views/Produits.vue')
+            },
+            {
+                path:'categories',
+                name:'categories',
+                component : ()=> import('./views/Categories.vue')
             }
 
-        ]
+        ],
+        beforeEnter(to,from,next){
+                if (!auth.isLoggedIn() ){
+                    next('/login')
+                }else{
+                    next()
+                }
+        }
 
     },
     
@@ -35,7 +47,14 @@ const routes = [
     {
         path:'/login',
         name:'login',
-        component : ()=> import('./views/authentication/Login.vue')
+        component : ()=> import('./views/authentication/Login.vue'),
+        beforeEnter(to,from,next){
+            if (!auth.isLoggedIn() ){
+                next()
+            }else{
+                next('/home')
+            }
+    }
     },
     
     {
@@ -45,6 +64,7 @@ const routes = [
     }
 ]
 const router = new Router({
+    mode : 'history',
     routes : routes,
     linkActiveClass : 'active'
 });

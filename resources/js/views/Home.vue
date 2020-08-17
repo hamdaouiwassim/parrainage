@@ -20,6 +20,8 @@ import Footer from "../components/Footer.vue";
 export default {
     components: {
         Header , Sidebar , Footer
-    }
+    }, created() {
+        document.querySelector("body").style.backgroundColor = "#fff";
+    },
 };
 </script>
