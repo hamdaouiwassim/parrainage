@@ -14,6 +14,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nom produit</th>
+                            <th scope="col">Categorie</th>
                             <th scope="col">Image</th>
                             <th scope="col">Prix </th>
                             <th scope="col">Actions </th>
@@ -23,6 +24,7 @@
                         <tr v-for="(produit,index) in produits" :key="index">
                             <th scope="row">{{ index+1 }}</th>
                             <td>{{ produit.name }}</td>
+                            <td>{{ findCategorie(produit.idcategorie) }}</td>
                             <td><img class="w100" :src="`${$store.state.serverPath}/storage/${produit.image}`"></td>
                             <td>{{ produit.price }} DT</td>
                             <td>
@@ -49,6 +51,15 @@
                 title="Ajouter un produit"
             >
                 <form v-on:submit.prevent="createProduit" >
+
+                     <div class="form-group">
+                        <label for="categorie_id">Categorie</label>
+                       <select v-model="produitData.categorie_id" name="idcategorie" id="categorie_id" class="form-control">
+                            <option> Choisir une categorie </option>
+                            <option  v-for="(categorie , index ) in categories" :value="categorie.id" :key="index">{{ categorie.name }}</option>
+                       </select>
+                        <div class="invalid-feedback" v-if="errors.categorie_id">{{ errors.categorie_id[0] }}</div>
+                    </div>
                     <div class="form-group">
                         <label for="name">Nom produit</label>
                         <input
@@ -111,6 +122,14 @@
                 title="Modifier produit"
             >
                 <form v-on:submit.prevent="updateProduit" >
+                <div class="form-group">
+                        <label for="categorie_id">Categorie</label>
+                       <select v-model="editproduitData.categorie_id" name="idcategorie" id="categorie_id" class="form-control">
+                            <option> Choisir une categorie </option>
+                            <option  v-for="(categorie , index ) in categories" :value="categorie.id" :key="index">{{ categorie.name }}</option>
+                       </select>
+                        <div class="invalid-feedback" v-if="errors.categorie_id">{{ errors.categorie_id[0] }}</div>
+                    </div>
                     <div class="form-group">
                         <label for="name">Nom produit</label>
                         <input
@@ -174,8 +193,10 @@ export default {
     name: "produit",
     data() {
         return {
+            categories : [],
             produits : [],
             produitData: {
+                categorie_id : "",
                 name: "",
                 image: "",
                 price: " "
@@ -187,6 +208,7 @@ export default {
         };
     },
     mounted(){
+        this.loadCategories();
         this.loadProduits();
     },
     methods: {
@@ -209,6 +231,21 @@ export default {
                         }
                 }
                
+        },
+            loadCategories : async function (){
+                    try {
+                        const response = await ProduitsService.loadCategories();
+                        //console.log(response);
+                        this.categories = response.data;
+                       
+                      
+                    } catch (error) {
+                         this.flashMessage.error({
+                            message: 'Erreur de chargements des categories ...',
+                            time : 5000
+                        });
+                        
+                    }
         },
         loadProduits : async function (){
                     try {
@@ -249,6 +286,7 @@ export default {
         createProduit:async function() {
             //console.log("form submitted");
             let formData = new FormData();
+            formData.append('categorie_id', this.produitData.categorie_id);
             formData.append('name', this.produitData.name)
             formData.append('image', this.produitData.image)
             formData.append('price', this.produitData.price)
@@ -263,6 +301,7 @@ export default {
                     time : 5000
                 });
                    this.produitData={
+                categorie_id:"",
                 name: "",
                 image: "",
                 price: " "
@@ -316,6 +355,7 @@ export default {
         updateProduit : async function (){
             console.log("update");
             const formData = new FormData();
+            formData.append('categorie_id', this.editproduitData.categorie_id);
             formData.append('name', this.editproduitData.name)
             formData.append('image', this.editproduitData.image)
             formData.append('price', this.editproduitData.price)
@@ -349,6 +389,17 @@ export default {
                 console.log(error);
                 
             }
+        },
+        findCategorie(id){
+            var categorieName = '';
+            this.categories.forEach(categorie => {
+               
+                if (categorie.id == id ){
+                    categorieName = categorie.name;
+                }
+            })
+            return categorieName;
+            
         },
         loadMore: async function() {
             try {

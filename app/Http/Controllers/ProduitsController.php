@@ -6,9 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 use App\Produit;
+use App\Categorie;
 
 class ProduitsController extends Controller
 {
+    
+     /**
+     * Display a listing of the categories.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function categories()
+    {
+        //
+        $categories = Categorie::all();
+        return response()->json($categories, 200);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +30,6 @@ class ProduitsController extends Controller
     public function index()
     {
         //
-
         $produits = Produit::paginate(4);
         return response()->json($produits, 200);
     }
@@ -41,13 +53,14 @@ class ProduitsController extends Controller
     public function store(Request $request)
     {
         //
-
         $validatedData = $request->validate([
+            'categorie_id' => 'required',
             'name' => 'required','min:3',
             'image' => 'required|mimes:jpeg,png,jpg',
             'price' => 'required',
         ]);
         $produit = new Produit();
+        $produit->idcategorie = $request->input('categorie_id');
         $produit->name = $request->input('name');
         $path = $request->file('image')->store('images_produits');
         $produit->image = $path;
@@ -98,12 +111,13 @@ class ProduitsController extends Controller
     public function update(Request $request, Produit $produit)
     {
         //
+        //dd($produit);
         $validatedData = $request->validate([
+            'categorie_id' => 'required',
             'name' => 'required','min:3',
-            //'image' => 'required|mimes:jpeg,png,jpg',
             'price' => 'required',
         ]);
-
+        $produit->idcategorie = $request->input('categorie_id');
         $produit->name = $request->input('name');
         $produit->price = $request->input('price');
         $oldPath = $produit->image;
@@ -142,6 +156,7 @@ class ProduitsController extends Controller
     public function destroy(Produit $produit)
     {
         //
+        //dd($produit);
         if ($produit->delete()){
             Storage::delete($produit->image);
             return response()->json([

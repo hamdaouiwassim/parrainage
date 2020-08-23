@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import * as auth from './services/auth_service';
 
 Vue.use(Vuex);
+Vue.use(require('vue-moment'));
 export default new Vuex.Store({
     state :{
         isLoggedIn : false,

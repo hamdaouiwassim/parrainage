@@ -25,26 +25,24 @@ Route::group(['prefix' => 'auth'], function () {
 
 });
 
-Route::group(['prefix' => 'user'], function () {
-    Route::group(['middleware' => 'auth:api'], function () {
-        //Route::get('logout','AuthController@logout');
-                    Route::post('edit-produit',function(){
-                        return response()->json([
-                                'message'=> 'Admin Access',
-                                'status_code' => 200
-                        ], 200);
-                    })->middleware('scope:do_anything');
-
-                    Route::post('create-produit',function(){
-                        return response()->json([
-                                'message'=> 'Admin Access',
-                                'status_code' => 200
-                        ], 200);
-                    })->middleware('scope:do_anything,can_use');
-
-
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::group(['middleware' => 'scope:user'], function () {
+       
+        
     });
+
+    Route::group(['middleware' => 'scope:admin'], function () {
+        Route::resource('produits', 'ProduitsController');
+        Route::get('/get-categories','ProduitsController@categories');
+        Route::resource('categories', 'CategorieController');
+        Route::resource('clients', 'ClientsController');
+        Route::resource('achats', 'AchatController');
+        
+    });
+
 });
 
-Route::resource('produits', 'ProduitsController');
-Route::resource('categories', 'CategoriesController');
+
+
+
+    

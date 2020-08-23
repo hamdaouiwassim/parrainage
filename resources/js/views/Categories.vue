@@ -15,7 +15,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Nom categorie</th>
                             <th scope="col">Description</th>
-                            
+                           
                             <th scope="col">Actions </th>
                         </tr>
                     </thead>
@@ -23,8 +23,8 @@
                         <tr v-for="(categorie,index) in categories" :key="index">
                             <th scope="row">{{ index+1 }}</th>
                             <td>{{ categorie.name }}</td>
-                           
-                            <td>{{ categorie.description }} DT</td>
+                            <td>{{ categorie.description }}</td>
+                            
                             <td>
                                     <button class="btn btn-success" v-on:click="editCategorie(categorie)"><i class="fa fa-edit"></i></button>
                                     <button class="btn btn-danger" v-on:click="deleteCategorie(categorie)"><i class="fa fa-trash"></i></button>
@@ -59,16 +59,19 @@
                         />
                         <div class="invalid-feedback" v-if="errors.name">{{ errors.name[0] }}</div>
                     </div>
-                  
                     <div class="form-group">
-                        <label for="description">Description categorie</label>
+                        <label for="description">Description</label>
+                        
                         <textarea
+                            
                             class="form-control"
                             v-model="categorieData.description"
+                            
                             id="description"
                         ></textarea>
                         <div class="invalid-feedback" v-if="errors.description">{{ errors.description[0] }}</div>
                     </div>
+                    
                     <hr />
                     <div class="text-right">
                             <b-button
@@ -107,13 +110,14 @@
                         />
                         <div class="invalid-feedback" v-if="errors.name">{{ errors.name[0] }}</div>
                     </div>
-                  
-                    <div class="form-group">
-                        <label for="description">Description categorie</label>
+                     <div class="form-group">
+                        <label for="description">Description</label>
+                        
                         <textarea
                             
                             class="form-control"
                             v-model="editcategorieData.description"
+                            
                             id="description"
                         ></textarea>
                         <div class="invalid-feedback" v-if="errors.description">{{ errors.description[0] }}</div>
@@ -203,7 +207,16 @@ export default {
                         
                     }
         },
-      
+        attachImage() {
+            // to use file reader
+           this.categorieData.image =  this.$refs.newCategorieImage.files[0];
+           let reader = new FileReader();
+           reader.addEventListener('load',function(){
+               this.$refs.newCategorieImageDisplay.src = reader.result;
+
+           }.bind(this),false);
+           reader.readAsDataURL(this.categorieData.image);
+        },
         hideNewCategorieModal() {
             this.$refs.CategorieModal.hide();
         },
@@ -228,7 +241,8 @@ export default {
                 });
                    this.categorieData={
                 name: "",
-               description:""
+                description: ""
+                
             };
              
             }catch(error){
@@ -240,7 +254,7 @@ export default {
                          break;
                     default :
                           //alert('somme error');
-                        this.hideNewCategorieModal();
+                          this.hideNewCategorieModal();
                         this.flashMessage.error({
                             message: 'un probleme d\'ajout ...',
                             time : 5000
@@ -265,11 +279,23 @@ export default {
                 this.editcategorieData = {...categorie};
                 this.showEditCategorieModal();
         },
+        editAttachImage(){
+            // to use file reader
+           this.editcategorieData.image =  this.$refs.editCategorieImage.files[0];
+           let reader = new FileReader();
+           reader.addEventListener('load',function(){
+               this.$refs.editCategorieImageDisplay.src = reader.result;
+
+           }.bind(this),false);
+           reader.readAsDataURL(this.editcategorieData.image);
+
+        },
         updateCategorie : async function (){
-            console.log(this.editcategorieData);
+            console.log("update");
             const formData = new FormData();
             formData.append('name', this.editcategorieData.name)
             formData.append('description', this.editcategorieData.description)
+           
             formData.append('_method',"put");
             try {
                 const response = await CategoriesService.updateCategorie(this.editcategorieData.id , formData);

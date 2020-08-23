@@ -15,7 +15,7 @@
                                 Dashboard
                        
                             </router-link>
-                            <router-link to="/home/produits" class="nav-link" exact>
+                            <router-link to="/home/categories" class="nav-link" exact>
                                
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-tachometer-alt"></i>
@@ -31,7 +31,7 @@
                                     Produits
                          
                             </router-link>
-                            <router-link to="/home" class="nav-link" exact>
+                            <router-link to="/home/clients" class="nav-link" exact>
                                
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-tachometer-alt"></i>
@@ -39,7 +39,7 @@
                                     Clients
                          
                             </router-link>
-                            <router-link to="/home" class="nav-link" exact>
+                            <router-link to="/home/achats" class="nav-link" exact>
                                
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-tachometer-alt"></i>

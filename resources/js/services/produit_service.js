@@ -4,10 +4,10 @@ export function createProduit(data){
     return httpFile().post('/produits',data)
 }
 
-
+export function loadCategories(){
+    return httpFile().get("/get-categories");
+}
 export function getAllproduits(){
-
-
     return httpFile().get("/produits");
 }
 

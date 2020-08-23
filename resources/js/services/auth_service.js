@@ -54,6 +54,18 @@ export function getAccessToken(){
     
 }
 
+export function getUserRole(){
+    
+     const token = localStorage.getItem('token');
+     if (!token){
+         return null;
+     }
+     const tokenData = jwt.decode(token);
+     console.log(tokenData);
+     return tokenData.user.user.role;   
+     
+ }
+
 export function getProfile(){
     return  http().get('api/auth/profile');
 }

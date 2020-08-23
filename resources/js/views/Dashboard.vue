@@ -5,6 +5,15 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary" v-on:click="userScope">User Scope</button>
+                                 <button class="btn btn-success" v-on:click="adminScope">Admin Scope </button>
+                            </div>
+                        
+                        </div>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
@@ -66,4 +75,31 @@
                         
                     </div>
                 </main>
+            
 </template>
+<script>
+import * as user from '../services/user_service'
+export default {
+    methods :{
+        userScope : async function (){
+            try {
+                const response = await user.userScope();
+                console.log(response);
+            } catch (error) {
+                console.log(' '+error,error.response.status)
+            }
+
+        },
+        adminScope : async function (){
+            try {
+                const response = await user.adminScope();
+                console.log(response);
+            } catch (error) {
+                console.log(' '+error,error.response.status)
+            }
+        },
+
+    }
+    
+}
+</script>
