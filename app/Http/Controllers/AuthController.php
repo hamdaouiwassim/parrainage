@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Parrainage;
 use Auth;
 use Illuminate\Support\Carbon;
 use Validator;
@@ -18,27 +19,72 @@ class AuthController extends Controller
             'name' => 'required|string|max:25',
             'email' => 'required|string|email',
             'password' => 'required|string|confirmed',
+            'parrainage_link' => 'required|string',
         ]);
 
-        $user = new User();
-        $user->name = $request->name ;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        
 
-        if ( $user->save() ){
+        
+
+
+        if ( count($this->getIdUserParrain($request->parrainage_link)) > 0 ){
+            // Parrainage link exist   
+            $user = new User();
+            $user->name = $request->name ;
+            $user->email = $request->email;
+            //$user->niveau =  $this->getlastLevel();
+            //$user->pere =  1;
+            $user->parrainage_link = md5(uniqid(rand(), true));
+            $user->password = bcrypt($request->password);
+    
+            if ( $user->save() ){
+                // Creation des liens de parrainage
+                $parrain = $this->getIdUserParrain($request->parrainage_link);
+                $parrainages = Parrainage::all();
+                
+                if ( count($parrainages) == 0  ){
+                    //dd($parrain[0]->id);
+                    $Parrainage = new Parrainage();
+                    $Parrainage->pere = $parrain[0]->id ;
+                    $Parrainage->parrain = $parrain[0]->id;
+                    $Parrainage->client = $user->id;
+                    $Parrainage->niveau = 1;
+                    $Parrainage->next_pere = $user->id;
+                    $Parrainage->save();
+                        
+                }else{
+                    $last_parrainage = Parrainage::latest()->first();
+                    $current_father = $last_parrainage->pere ;
+                    
+                }
+
+                    return response()->json([
+                        'message' => 'Utilisateur cree avec succes',
+                        'status_code' => 201
+    
+                    ], 201);
+            }else{
                 return response()->json([
-                    'message' => 'Utilisateur cree avec succes',
-                    'status_code' => 201
+                    'message' => 'Creation echouee',
+                    'status_code' => 500
+    
+                ], 500);
+    
+            }
 
-                ], 201);
+
+
         }else{
+
             return response()->json([
-                'message' => 'Creation echouee',
+                'message' => 'parrainage link incorrecte',
                 'status_code' => 500
 
             ], 500);
 
         }
+
+       
 
     }
 
@@ -125,6 +171,13 @@ class AuthController extends Controller
         ], 500);
         
 
+
+    }
+    public function getIdUserParrain($link){
+        return User::where('parrainage_link','=',$link)->get();
+
+    }
+    public function getlastLevel(){
 
     }
 

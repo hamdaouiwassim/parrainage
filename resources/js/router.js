@@ -78,7 +78,14 @@ const routes = [
     {
         path:'/register',
         name:'register',
-        component : ()=> import('./views/authentication/Register.vue')
+        component : ()=> import('./views/authentication/Register.vue'),
+        beforeEnter(to,from,next){
+            if (!auth.isLoggedIn() ){
+                next()
+            }else{
+                next('/home')
+            }
+        }
     },
     
     {

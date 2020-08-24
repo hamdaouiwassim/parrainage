@@ -17,7 +17,8 @@ class AdminSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'hamdaouiwassim@gmail.com',
             'password' => bcrypt("123456789"),
-            'role' => 'admin'
+            'role' => 'admin',
+            'parrainage_link'=> md5(uniqid(rand(), true)),
             ]);
     }
 }

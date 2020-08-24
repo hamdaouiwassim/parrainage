@@ -129,6 +129,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Register',
@@ -141,7 +159,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         name: '',
         email: '',
         password: '',
-        password_confirmation: ''
+        password_confirmation: '',
+        parrainage_link: ''
       },
       errors: {}
     };
@@ -158,8 +177,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["register"](this.user);
 
               case 3:
-                this.errors = {};
-                this.$router.push('/login');
+                this.errors = {}; //this.$router.push('/login');
+
+                this.flashMessage.success({
+                  message: 'Inscription faite naviguer vers la page login ...',
+                  time: 5000
+                });
                 _context.next = 21;
                 break;
 
@@ -238,190 +261,248 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _c("form", { on: { click: _vm.register } }, [
-              _c("div", { staticClass: "form-row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "small mb-1",
-                        attrs: { for: "inputFirstName" }
-                      },
-                      [_vm._v("Nom utilisateur")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.name,
-                          expression: "user.name"
-                        }
-                      ],
-                      staticClass: "form-control py-4",
-                      attrs: {
-                        id: "name",
-                        type: "text",
-                        placeholder: "Entrer Nom utilisateur"
-                      },
-                      domProps: { value: _vm.user.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "name", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.name
-                      ? _c("div", { staticClass: "invalid-feedback" }, [
-                          _vm._v(_vm._s(_vm.errors.name[0]))
-                        ])
-                      : _vm._e()
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "small mb-1",
-                    attrs: { for: "inputEmailAddress" }
-                  },
-                  [_vm._v("Email")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.user.email,
-                      expression: "user.email"
-                    }
-                  ],
-                  staticClass: "form-control py-4",
-                  attrs: {
-                    id: "email",
-                    type: "email",
-                    "aria-describedby": "emailHelp",
-                    placeholder: "Entrer votre adresse email"
-                  },
-                  domProps: { value: _vm.user.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.user, "email", $event.target.value)
-                    }
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.register($event)
                   }
-                }),
-                _vm._v(" "),
-                _vm.errors.email
-                  ? _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(_vm._s(_vm.errors.email[0]))
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-row" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "small mb-1",
-                        attrs: { for: "inputPassword" }
-                      },
-                      [_vm._v("Mot de passe")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
+                }
+              },
+              [
+                _c("div", { staticClass: "form-row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.password,
-                          expression: "user.password"
-                        }
-                      ],
-                      staticClass: "form-control py-4",
-                      attrs: {
-                        id: "password",
-                        type: "password",
-                        placeholder: "Entrer Mot de passe"
-                      },
-                      domProps: { value: _vm.user.password },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                          staticClass: "small mb-1",
+                          attrs: { for: "inputFirstName" }
+                        },
+                        [_vm._v("Nom utilisateur")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.name,
+                            expression: "user.name"
                           }
-                          _vm.$set(_vm.user, "password", $event.target.value)
+                        ],
+                        staticClass: "form-control py-4",
+                        attrs: {
+                          id: "name",
+                          type: "text",
+                          placeholder: "Entrer Nom utilisateur"
+                        },
+                        domProps: { value: _vm.user.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.user, "name", $event.target.value)
+                          }
                         }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.password
-                      ? _c("div", { staticClass: "invalid-feedback" }, [
-                          _vm._v(_vm._s(_vm.errors.password[0]))
-                        ])
-                      : _vm._e()
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.name
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.name[0]))
+                          ])
+                        : _vm._e()
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "small mb-1",
+                      attrs: { for: "inputEmailAddress" }
+                    },
+                    [_vm._v("Email")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass: "small mb-1",
-                        attrs: { for: "inputConfirmPassword" }
-                      },
-                      [_vm._v("Repeter mot de passe")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.password_confirmation,
-                          expression: "user.password_confirmation"
-                        }
-                      ],
-                      staticClass: "form-control py-4",
-                      attrs: {
-                        id: "password_confirmation",
-                        type: "password",
-                        placeholder: "Repeter mot de passe"
-                      },
-                      domProps: { value: _vm.user.password_confirmation },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.user,
-                            "password_confirmation",
-                            $event.target.value
-                          )
-                        }
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.email,
+                        expression: "user.email"
                       }
-                    })
+                    ],
+                    staticClass: "form-control py-4",
+                    attrs: {
+                      id: "email",
+                      type: "email",
+                      "aria-describedby": "emailHelp",
+                      placeholder: "Entrer votre adresse email"
+                    },
+                    domProps: { value: _vm.user.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "email", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.email
+                    ? _c("div", { staticClass: "invalid-feedback" }, [
+                        _vm._v(_vm._s(_vm.errors.email[0]))
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "small mb-1",
+                      attrs: { for: "inputConfirmPassword" }
+                    },
+                    [_vm._v("Parrainage Link")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.parrainage_link,
+                        expression: "user.parrainage_link"
+                      }
+                    ],
+                    staticClass: "form-control py-4",
+                    attrs: {
+                      id: "parrainage_link",
+                      type: "text",
+                      placeholder: "Parrainage Link"
+                    },
+                    domProps: { value: _vm.user.parrainage_link },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.user,
+                          "parrainage_link",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.parrainage_link
+                    ? _c("div", { staticClass: "invalid-feedback" }, [
+                        _vm._v(_vm._s(_vm.errors.parrainage_link[0]))
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-row" }, [
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "small mb-1",
+                          attrs: { for: "inputPassword" }
+                        },
+                        [_vm._v("Mot de passe")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.password,
+                            expression: "user.password"
+                          }
+                        ],
+                        staticClass: "form-control py-4",
+                        attrs: {
+                          id: "password",
+                          type: "password",
+                          placeholder: "Entrer Mot de passe"
+                        },
+                        domProps: { value: _vm.user.password },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.user, "password", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.password
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.password[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "small mb-1",
+                          attrs: { for: "inputConfirmPassword" }
+                        },
+                        [_vm._v("Repeter mot de passe")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.password_confirmation,
+                            expression: "user.password_confirmation"
+                          }
+                        ],
+                        staticClass: "form-control py-4",
+                        attrs: {
+                          id: "password_confirmation",
+                          type: "password",
+                          placeholder: "Repeter mot de passe"
+                        },
+                        domProps: { value: _vm.user.password_confirmation },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._m(1)
-            ])
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-footer text-center" }, [

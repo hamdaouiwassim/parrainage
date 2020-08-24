@@ -9,7 +9,7 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                        <form v-on:click="register">
+                        <form v-on:submit.prevent="register">
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -45,6 +45,23 @@
                                 />
                                 <div class="invalid-feedback" v-if="errors.email">{{ errors.email[0] }}</div>
                             </div>
+                              
+                            <div class="form-group">
+                                        <label
+                                            class="small mb-1"
+                                            for="inputConfirmPassword"
+                                            >Parrainage Link</label
+                                        >
+                                        <input
+                                            class="form-control py-4"
+                                            id="parrainage_link"
+                                            type="text"
+                                            v-model="user.parrainage_link"
+                                            placeholder="Parrainage Link"
+                                        />
+                                        <div class="invalid-feedback" v-if="errors.parrainage_link">{{ errors.parrainage_link[0] }}</div>
+                            </div>
+                                
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -80,6 +97,7 @@
                                     </div>
                                 </div>
                             </div>
+                              
                             <div class="form-group mt-4 mb-0">
                                 <button
                                     type="submit"
@@ -123,6 +141,7 @@ export default {
                 email :'' ,
                 password :'' ,
                 password_confirmation :'' ,
+                parrainage_link:'',
             }, 
             errors : {}
 
@@ -134,7 +153,11 @@ export default {
             try {
                 await auth.register(this.user);
                 this.errors = {};
-                this.$router.push('/login');
+                //this.$router.push('/login');
+                 this.flashMessage.success({
+                            message: 'Inscription faite naviguer vers la page login ...',
+                            time : 5000
+                        });
             } catch (error) {
                 console.log(error);
                 switch(error.response.status){
