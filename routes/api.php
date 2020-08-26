@@ -27,7 +27,10 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['middleware' => 'scope:user'], function () {
-       
+        Route::get('parrainage/directe/{id}', 'ParrainageController@getParrainageDirects');
+        Route::get('parrainage/users', 'ParrainageController@getallusers');
+        Route::get('parrainage/arbre/{id}', 'ParrainageController@arbre');
+        
         
     });
 

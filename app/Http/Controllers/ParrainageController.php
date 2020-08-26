@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Parrainage;
+use App\User;
 use Illuminate\Http\Request;
 
 class ParrainageController extends Controller
@@ -82,4 +83,57 @@ class ParrainageController extends Controller
     {
         //
     }
+
+    public function getParrainageDirects($id){
+
+        $pdirects = Parrainage::where('parrain',$id)->get();
+        return response()->json($pdirects, 200);
+
+    }
+    public function getallusers(){
+
+        $users = User::where('role','=','user')->get();
+        return response()->json($users, 200);
+
+    }
+
+    public function chercherFils($pere){
+        return  Parrainage::where('pere',$pere)->get();
+
+    }
+    public function arbre($pere){
+
+        $tab = array();
+        // niveau 1
+        $tab[0] = array();
+        foreach( $this->chercherFils($pere) as $fils ){
+            $tab[0][] = $fils->client ;        
+                
+        }
+        if (count($tab) > 0  ){
+                foreach( $tab[0] as $f1  ){
+                    foreach( $this->chercherFils($f1) as $fils ){
+                        $tab[1][] = $fils->client ;        
+                            
+                    }
+                            
+                        
+                }
+        }
+        if (count($tab) > 1  ){
+                foreach( $tab[1] as $f2  ){
+                    foreach( $this->chercherFils($f2) as $fils ){
+                        $tab[2][] = $fils->client ;        
+                            
+                    }
+                            
+                        
+                }
+        }
+        return response()->json($tab, 200);
+       
+        
+
+    }
+
 }

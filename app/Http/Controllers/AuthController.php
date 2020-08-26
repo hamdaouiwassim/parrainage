@@ -43,6 +43,7 @@ class AuthController extends Controller
                 $parrainages = Parrainage::all();
                 
                 if ( count($parrainages) == 0  ){
+                    // 1er parrainage
                     //dd($parrain[0]->id);
                     $Parrainage = new Parrainage();
                     $Parrainage->pere = $parrain[0]->id ;
@@ -53,9 +54,38 @@ class AuthController extends Controller
                     $Parrainage->save();
                         
                 }else{
+                    // n parrainage
+                    $all_parrainages = Parrainage::all()->count();
                     $last_parrainage = Parrainage::latest()->first();
                     $current_father = $last_parrainage->pere ;
+                    $current_level = $last_parrainage->niveau;
+                    $current_level_links = Parrainage::where('niveau',$current_level )->count();
+
+                    $current_father_links = Parrainage::where('pere',$current_father)->count();
+
+                    if ( $current_father_links > 1 ){ // changement de pere
+                        $current_father =  $last_parrainage->next_pere;
+                        if ( $current_level_links >= ( $current_level*2 )  )
+                            {// changement du niveau 
+                                 $current_level++;
+                                
+                            }
+                    }
+                    if ( $all_parrainages % 2 != 0 ){ // changement du next pere
+                        $index = intdiv($all_parrainages , 2) ; 
+                        $next_pere = $parrainages[$index]->client;
+
+                    }else{
+                        $next_pere = $last_parrainage->next_pere; 
+                    }
                     
+                    $Parrainage = new Parrainage();
+                    $Parrainage->pere = $current_father ;
+                    $Parrainage->parrain = $parrain[0]->id;
+                    $Parrainage->client = $user->id;
+                    $Parrainage->niveau = $current_level;
+                    $Parrainage->next_pere = $next_pere;
+                    $Parrainage->save();
                 }
 
                     return response()->json([

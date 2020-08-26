@@ -153,6 +153,7 @@ export default {
             try {
                 await auth.register(this.user);
                 this.errors = {};
+                this.user = {};
                 //this.$router.push('/login');
                  this.flashMessage.success({
                             message: 'Inscription faite naviguer vers la page login ...',

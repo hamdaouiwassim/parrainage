@@ -16,6 +16,19 @@ const routes = [
                 path:'',
                 name:'dashboard',
                 component : ()=> import('./views/Dashboard.vue')
+            },  
+            {
+                path:'parrainage',
+                name:'parrainage',
+                component : ()=> import('./views/user/Parrainage.vue'),
+                beforeEnter(to,from,next){
+                    console.log(auth.getUserRole());
+                    if (auth.getUserRole() == 'user' ){
+                        next()
+                    }else{
+                        next('/404')
+                    }
+                }
             },
             {
                 path:'produits',
