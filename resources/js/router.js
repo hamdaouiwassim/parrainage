@@ -15,12 +15,86 @@ const routes = [
             {
                 path:'',
                 name:'dashboard',
-                component : ()=> import('./views/Dashboard.vue')
+                component : ()=> import('./views/Dashboard.vue'),
+                beforeEnter(to,from,next){
+                    console.log(auth.getUserRole());
+                    if (auth.getUserRole() == 'admin' ){
+                        next()
+                    }else{
+                        next('/home/user/produits')
+                    }
+                }
             },  
             {
                 path:'parrainage',
                 name:'parrainage',
                 component : ()=> import('./views/user/Parrainage.vue'),
+                beforeEnter(to,from,next){
+                    console.log(auth.getUserRole());
+                    if (auth.getUserRole() == 'user' ){
+                        next()
+                    }else{
+                        next('/404')
+                    }
+                }
+            }
+            ,  
+            {
+                path:'user/produits',
+                name:'user_produits',
+                component : ()=> import('./views/user/Produits.vue'),
+                beforeEnter(to,from,next){
+                    console.log(auth.getUserRole());
+                    if (auth.getUserRole() == 'user' ){
+                        next()
+                    }else{
+                        next('/404')
+                    }
+                }
+            },
+            {
+                path:'user/achats',
+                name:'user_achats',
+                component : ()=> import('./views/user/Achats.vue'),
+                beforeEnter(to,from,next){
+                    console.log(auth.getUserRole());
+                    if (auth.getUserRole() == 'user' ){
+                        next()
+                    }else{
+                        next('/404')
+                    }
+                }
+            },
+            {
+                path:'user/commissions',
+                name:'user_commissions',
+                component : ()=> import('./views/user/Commissions.vue'),
+                beforeEnter(to,from,next){
+                    console.log(auth.getUserRole());
+                    if (auth.getUserRole() == 'user' ){
+                        next()
+                    }else{
+                        next('/404')
+                    }
+                }
+            },
+            {
+                path:'user/profile',
+                name:'user_profile',
+                component : ()=> import('./views/user/Profile.vue'),
+                beforeEnter(to,from,next){
+                    console.log(auth.getUserRole());
+                    if (auth.getUserRole() == 'user' ){
+                        next()
+                    }else{
+                        next('/404')
+                    }
+                }
+            },
+            {
+                path:'user/arbres',
+                name:'user_arbres',
+                component : ()=> import('./views/user/Arbre.vue'),
                 beforeEnter(to,from,next){
                     console.log(auth.getUserRole());
                     if (auth.getUserRole() == 'user' ){

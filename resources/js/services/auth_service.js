@@ -6,6 +6,11 @@ export function register(user){
     return http().post('api/auth/register',user);
 }
 
+export function UsersAll(){
+    //console.log(data);
+    return httpFile().get('users/all');
+       
+} 
 
 export function login(user){
     //console.log(data);

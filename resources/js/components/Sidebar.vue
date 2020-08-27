@@ -75,7 +75,7 @@
                         <!-- user sidebar -->
                         <div class="nav" v-if="$store.state.profile.role === 'user'" >
                          
-                            <router-link to="/home" class="nav-link" exact >
+                            <router-link to="/home/user/produits" class="nav-link" exact >
                             
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-tachometer-alt"></i>
@@ -83,7 +83,7 @@
                                 Dashboard
                        
                             </router-link>
-                            <router-link to="/home/arbre" class="nav-link" exact>
+                            <router-link to="/home/user/arbres" class="nav-link" exact>
                                
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-tachometer-alt"></i>
@@ -99,7 +99,7 @@
                                     Parrainage directe
                          
                             </router-link>
-                            <router-link to="/home/achats" class="nav-link" exact>
+                            <router-link to="/home/user/achats" class="nav-link" exact>
                                
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-tachometer-alt"></i>
@@ -108,7 +108,7 @@
                          
                             </router-link>
                            
-                            <router-link to="/home/commissions" class="nav-link" exact>
+                            <router-link to="/home/user/commissions" class="nav-link" exact>
                                
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-tachometer-alt"></i>
@@ -116,7 +116,7 @@
                                     Commissions
                          
                             </router-link>
-                            <router-link to="/home/profile" class="nav-link" exact>
+                            <router-link to="/home/user/profile" class="nav-link" exact>
                                
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-tachometer-alt"></i>

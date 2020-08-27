@@ -11,3 +11,12 @@ export function getarbre(id){
 }
 
 
+export function getParrainage(id){
+    return httpFile().get(`parrainage/user/${id}`);
+}
+
+
+
+
+
+

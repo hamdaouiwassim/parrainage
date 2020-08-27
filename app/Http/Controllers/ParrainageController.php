@@ -130,10 +130,24 @@ class ParrainageController extends Controller
                         
                 }
         }
+        if (count($tab) > 2  ){
+            foreach( $tab[2] as $f3  ){
+                foreach( $this->chercherFils($f3) as $fils ){
+                    $tab[3][] = $fils->client ;        
+                        
+                }
+                        
+                    
+            }
+    }
         return response()->json($tab, 200);
        
         
 
     }
+    public function parrainageUser($id){
+        return  response()->json(Parrainage::where('client',$id)->get(),200); 
+    }
+   
 
 }
