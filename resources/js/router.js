@@ -38,6 +38,34 @@ const routes = [
                     }
                 }
             }
+            ,
+            {
+                path:'commissions',
+                name:'commissions',
+                component : ()=> import('./views/Commissions.vue'),
+                beforeEnter(to,from,next){
+                    console.log(auth.getUserRole());
+                    if (auth.getUserRole() == 'admin' ){
+                        next()
+                    }else{
+                        next('/404')
+                    }
+                }
+            }
+            , 
+            {
+                path:'profile',
+                name:'profile',
+                component : ()=> import('./views/Profile.vue'),
+                beforeEnter(to,from,next){
+                    console.log(auth.getUserRole());
+                    if (auth.getUserRole() == 'admin' ){
+                        next()
+                    }else{
+                        next('/404')
+                    }
+                }
+            }
             ,  
             {
                 path:'user/produits',

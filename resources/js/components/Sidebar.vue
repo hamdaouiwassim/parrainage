@@ -47,7 +47,7 @@
                                     Achats
                          
                             </router-link>
-                            <router-link to="/home" class="nav-link" exact>
+                            <router-link to="/home/commissions" class="nav-link" exact>
                                
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-tachometer-alt"></i>
@@ -55,7 +55,7 @@
                                     Commissions
                          
                             </router-link>
-                            <router-link to="/home" class="nav-link" exact>
+                            <router-link to="/home/profile" class="nav-link" exact>
                                
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-tachometer-alt"></i>

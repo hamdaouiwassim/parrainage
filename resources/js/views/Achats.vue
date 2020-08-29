@@ -45,6 +45,7 @@ export default {
     data() {
         return {
             achats : [],
+            clients : [],
             categories : [],
             produits : [],
             moreExists : false ,
@@ -82,13 +83,9 @@ export default {
                     try {
                         const response = await AchatsService.getAllclients();
                         //console.log(response);
-                        this.clients = response.data.data;
-                          if (response.data.current_page < response.data.last_page ){
-                                            this.moreExists = true;
-                                            this.nextPage = response.data.current_page + 1;
-                        }else{
-                                            this.moreExists = false;
-                        }
+                        this.clients = response.data;
+                        console.log(response.data);
+                       
                       
                     } catch (error) {
                          this.flashMessage.error({

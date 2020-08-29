@@ -8,7 +8,7 @@ export function getAchatsUser(id){
 }
 
 export function getAllclients(){
-    return httpFile().get('/clients')
+    return httpFile().get('/users/all')
 }
 
 export function getAllproduits(){

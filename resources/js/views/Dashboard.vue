@@ -7,71 +7,46 @@
                         </ol>
 
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button class="btn btn-primary" v-on:click="userScope">User Scope</button>
-                                 <button class="btn btn-success" v-on:click="adminScope">Admin Scope </button>
-                            </div>
-                        
-                        </div>
+                    
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Primary Card</div>
+                                    <div class="card-body">Nombre des achats</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="#">{{ stats[0] }} Achats</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Warning Card</div>
+                                    <div class="card-body">Nombres des clients</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="#">{{ stats[1] }} Clients</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Success Card</div>
+                                    <div class="card-body">Nombres des comissions</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="#">{{ stats[2] }} Comissions</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Danger Card</div>
+                                    <div class="card-body">Nombres des produits</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="#">{{ stats[3] }} Produits</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area mr-1"></i>
-                                        Area Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar mr-1"></i>
-                                        Bar Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
+                       
                         
                     </div>
                 </main>
@@ -79,25 +54,32 @@
 </template>
 <script>
 import * as user from '../services/user_service'
+import * as dashService from '../services/dashboard'
 export default {
+     name: "dashboard",
+    data() {
+        return {
+            stats : {},
+           
+        };
+    },
+    mounted(){
+        this.GetStat()
+    },
     methods :{
-        userScope : async function (){
-            try {
-                const response = await user.userScope();
-                console.log(response);
+   
+        GetStat : async function (){
+             try {
+                const response = await dashService.GetStat();
+                this.stats = response.data;
+                console.log(this.stats);
             } catch (error) {
                 console.log(' '+error,error.response.status)
             }
+        },
+      
+        
 
-        },
-        adminScope : async function (){
-            try {
-                const response = await user.adminScope();
-                console.log(response);
-            } catch (error) {
-                console.log(' '+error,error.response.status)
-            }
-        },
 
     }
     

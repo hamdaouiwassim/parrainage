@@ -101,7 +101,7 @@ export default {
         loadMore: async function() {
             try {
                 const res = await authService.getProfile();
-                const response = await CommissionService.loadMore(res.data.id,this.nextPage);
+                const response = await CommissionService.loadMoreUserCommission(res.data.id,this.nextPage);
                 console.log(response);
                   if (response.data.current_page < response.data.last_page ){
                                             
@@ -113,13 +113,14 @@ export default {
 
                 response.data.data.forEach(
                     data => {
-                        this.achats.push(data);
+                        //console.log(data);
+                        this.commissions.push(data);
                     }
                 )
 
             } catch (error) {
                 this.flashMessage.error({
-                            message:"erreur de chargement des achats",
+                            message:"erreur de chargement des commissions",
                             time : 5000
                         });
                 

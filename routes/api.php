@@ -31,10 +31,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('parrainage/users', 'ParrainageController@getallusers');
         Route::get('parrainage/arbre/{id}', 'ParrainageController@arbre');
         Route::get('/achats/user/{id}',"AchatController@getUserAchats");
-        Route::get('/commissions/user/{id}',"CommissionController@getUserCommissions");
-        Route::get('/commissions/user/all/{id}',"CommissionController@getUserCommissionsAll");
-        Route::get('/parrainage/user/{id}','ParrainageController@parrainageUser');
-        Route::get('/users/all','ClientsController@getAllUsers');
+       
+        
         
         
         
@@ -48,12 +46,17 @@ Route::group(['middleware' => 'auth:api'], function () {
         
           
     });
-   
+    Route::get('/getstat',"CommissionController@getStat");
+    Route::get('/commissions/user/{id}',"CommissionController@getUserCommissions");
+    Route::get('/commissions/user/all/{id}',"CommissionController@getUserCommissionsAll");
+    Route::get('/parrainage/user/{id}','ParrainageController@parrainageUser');
+    Route::resource('commissions', 'CommissionController');
     Route::resource('clients', 'ClientsController');
     Route::resource('achats', 'AchatController');
     Route::resource('produits', 'ProduitsController');
     Route::get('/get-categories','ProduitsController@categories');
     Route::resource('categories', 'CategorieController');
+    Route::get('/users/all','ClientsController@getAllUsers');
 
 });
 

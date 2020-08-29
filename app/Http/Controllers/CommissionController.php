@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Commission;
+use App\Produit;
+use App\Achat;
+use App\User;
 use Illuminate\Http\Request;
 
 class CommissionController extends Controller
@@ -15,6 +18,9 @@ class CommissionController extends Controller
     public function index()
     {
         //
+        $Commissions = Commission::paginate(4);
+        return response()->json($Commissions, 200);
+
     }
 
     /**
@@ -58,6 +64,8 @@ class CommissionController extends Controller
     public function edit(Commission $commission)
     {
         //
+        $commissions = Commission::paginate(4);
+        return response()->json($commissions, 200);
     }
 
     /**
@@ -96,5 +104,14 @@ class CommissionController extends Controller
         $commissions = Commission::where('idbeneficiaire',$id)->get();
         //dd($achats);
         return response()->json($commissions, 200);
+    }
+
+    public function getStat(){
+       $data = array();
+       $data[] = User::all()->count();
+       $data[] = Produit::all()->count();
+       $data[] = Commission::all()->count();
+       $data[] = Achat::all()->count();
+       return response()->json($data, 200);
     }
 }
