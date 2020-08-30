@@ -37,7 +37,7 @@
                         <div class="row col-md-8 offset-2 text-center" v-if="niveau3.length > 0" >
                         
                          
-                                <div class="col-md-1" v-for="(nv,index) in niveau1" :key="index"> 
+                                <div style="width:12.5%" v-for="(nv,index) in niveau3" :key="index"> 
                                     <button class="btn btn-danger"> {{ findUser(nv) }} </button>
                                  </div>
                                 
@@ -48,7 +48,7 @@
                         <div class="row col-md-12 text-center" v-if="niveau4.length > 0" >
                         
                          
-                                <div class="col-md-1" v-for="(nv,index) in niveau4" :key="index"> 
+                                <div  v-for="(nv,index) in niveau4" :key="index"> 
                                     <button class="btn btn-danger"> {{ findUser(nv) }} </button>
                                  </div>
                                 

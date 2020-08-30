@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Validator;
 use App\Produit;
 use App\Categorie;
+use App\Achat;
 
 class ProduitsController extends Controller
 {
@@ -157,7 +158,14 @@ class ProduitsController extends Controller
     {
         //
         //dd($produit);
+        $id = $produit->id;
+        
         if ($produit->delete()){
+            $achats = Achat::where('idproduit',$produit->id)->get();
+            foreach($achats as $a){
+                $a->delete();
+
+            }
             Storage::delete($produit->image);
             return response()->json([
                 "message"=>"produit supprimer avec succes",

@@ -293,12 +293,16 @@ var render = function() {
         ? _c(
             "div",
             { staticClass: "row col-md-8 offset-2 text-center" },
-            _vm._l(_vm.niveau1, function(nv, index) {
-              return _c("div", { key: index, staticClass: "col-md-1" }, [
-                _c("button", { staticClass: "btn btn-danger" }, [
-                  _vm._v(" " + _vm._s(_vm.findUser(nv)) + " ")
-                ])
-              ])
+            _vm._l(_vm.niveau3, function(nv, index) {
+              return _c(
+                "div",
+                { key: index, staticStyle: { width: "12.5%" } },
+                [
+                  _c("button", { staticClass: "btn btn-danger" }, [
+                    _vm._v(" " + _vm._s(_vm.findUser(nv)) + " ")
+                  ])
+                ]
+              )
             }),
             0
           )
@@ -315,7 +319,7 @@ var render = function() {
             "div",
             { staticClass: "row col-md-12 text-center" },
             _vm._l(_vm.niveau4, function(nv, index) {
-              return _c("div", { key: index, staticClass: "col-md-1" }, [
+              return _c("div", { key: index }, [
                 _c("button", { staticClass: "btn btn-danger" }, [
                   _vm._v(" " + _vm._s(_vm.findUser(nv)) + " ")
                 ])
