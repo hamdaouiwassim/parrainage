@@ -54,7 +54,7 @@ class AchatController extends Controller
             $commission->idclient = $request->iduser ;
             $commission->idbeneficiaire = $parrain[0]->parrain  ;
             $commission->type = "Parrainage";
-            $commission->prix = ( $produit->price*10 )/100;
+            $commission->prix = round(( $produit->price*10 )/100,2);
             $commission->save();
             // chercher 4 pere dans 4 niveau
             $pere = $parrain[0]->pere;
@@ -62,7 +62,7 @@ class AchatController extends Controller
             $commission->idclient = $request->iduser ;
             $commission->idbeneficiaire = $pere;
             $commission->type = "Reseau";
-            $commission->prix = ( $produit->price*10 )/100;
+            $commission->prix = round(( $produit->price*10 )/100, 2);
             $commission->save();
             for( $i=1;$i<4 ; $i++ ){
                 $pere = $this->chercherPere($pere);
@@ -77,7 +77,7 @@ class AchatController extends Controller
                     $commission->idclient = $request->iduser ;
                     $commission->idbeneficiaire = $pere;
                     $commission->type = "Reseau";
-                    $commission->prix = ( $produit->price*$pourcentage )/100;
+                    $commission->prix = round(( $produit->price*$pourcentage )/100, 2);
                     $commission->save();
                 }
                 
