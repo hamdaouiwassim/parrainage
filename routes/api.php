@@ -57,10 +57,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/get-categories','ProduitsController@categories');
     Route::resource('categories', 'CategorieController');
     Route::get('/users/all','ClientsController@getAllUsers');
+    Route::get('/cm','CommissionController@commissionMois');
 
 });
 
+Route::get('/cm','CommissionController@commissionMois');
 
 
-
-    

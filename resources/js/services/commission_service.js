@@ -18,3 +18,9 @@ export function getUserCommissionsAll(id){
 export function getCommissionsAll(){
     return httpFile().get('/commissions');
 }
+
+export function getCommissionsMensuelle(){
+    return httpFile().get('/cm');
+}
+
+

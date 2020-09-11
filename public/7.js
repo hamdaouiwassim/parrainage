@@ -381,7 +381,7 @@ render._withStripped = true
 /*!*****************************************************!*\
   !*** ./resources/js/services/commission_service.js ***!
   \*****************************************************/
-/*! exports provided: getUserCommissions, loadMoreUserCommission, loadMore, getUserCommissionsAll, getCommissionsAll */
+/*! exports provided: getUserCommissions, loadMoreUserCommission, loadMore, getUserCommissionsAll, getCommissionsAll, getCommissionsMensuelle */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -391,6 +391,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadMore", function() { return loadMore; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserCommissionsAll", function() { return getUserCommissionsAll; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCommissionsAll", function() { return getCommissionsAll; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCommissionsMensuelle", function() { return getCommissionsMensuelle; });
 /* harmony import */ var _services_http_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/http_service */ "./resources/js/services/http_service.js");
 
 function getUserCommissions(id) {
@@ -407,6 +408,9 @@ function getUserCommissionsAll(id) {
 }
 function getCommissionsAll() {
   return Object(_services_http_service__WEBPACK_IMPORTED_MODULE_0__["httpFile"])().get('/commissions');
+}
+function getCommissionsMensuelle() {
+  return Object(_services_http_service__WEBPACK_IMPORTED_MODULE_0__["httpFile"])().get('/cm');
 }
 
 /***/ }),

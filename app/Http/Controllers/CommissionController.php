@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Commission;
+use App\Parrainage;
 use App\Produit;
 use App\Achat;
 use App\User;
@@ -114,4 +114,85 @@ class CommissionController extends Controller
        $data[] = Achat::all()->count();
        return response()->json($data, 200);
     }
+
+    
+
+
+    public function commissionMois(){
+        $courrent_date = date('d');
+        $courrent_month = date('m');
+    
+        $from = date('Y')."-".($courrent_month-1)."-01" ;
+        $to = date('Y')."-".($courrent_month-1)."-31" ;
+        $commissionsM = Commission::where('type','Mensuelle')
+                        ->whereBetween('created_at', [$from, $to])->get();
+
+if (count($commissionsM == 0 )){
+                
+             // lister tt les utilisateurs sauf les utilisateurs de dernier niveau 
+             $last_level = Parrainage::max('niveau');
+             $users = User::all();
+             
+             
+             foreach($users as $user){
+                 // chercher fils
+                 $fils = Parrainage::where('pere',$user->id)->get();
+
+                 if (  count($fils) == 2 ){
+                     // pour chaque fils
+                     $pts = array();
+                    
+                     foreach($fils as $f){
+                         // chercher le nombre du pts pour chaque fils
+                         $from = date('Y')."-".($courrent_month-1)."-01" ;
+                         $to = date('Y')."-".($courrent_month-1)."-31" ;
+                         $commissions = Commission::where('idclient',$f->client)
+                                         ->where('type','Reseau')
+                                         ->whereBetween('created_at', [$from, $to])->get();
+                         $sc = 0;
+                        foreach($commissions as $c){
+                             $sc += $c->prix; 
+                         }
+                         $pts[] = $sc;
+                         }// endforeach
+                         //dd($pts);
+            
+                                        if ( $pts[0] != 0 ||  $pts[1] != 0 ){
+                                                        if ( $pts[0] == $pts[1] ){
+                                                            $commission = new Commission();
+                                                            $commission->idclient = $fils[0]->client ;
+                                                            $commission->idbeneficiaire = $user->id;
+                                                            $commission->type = "Mensuelle";
+                                                            $commission->prix = $pts[0];
+                                                            $commission->save();
+                                                        }elseif ($pts[0] > $pts[1]  ){    
+                                                            $commission = new Commission();
+                                                            $commission->idclient = $fils[0]->client ;
+                                                            $commission->idbeneficiaire = $user->id;
+                                                            $commission->type = "Mensuelle";
+                                                            $commission->prix = $pts[0] - $pts[1];
+                                                            $commission->save();
+
+                                                        }else{
+                                                            $commission = new Commission();
+                                                            $commission->idclient = $fils[0]->client ;
+                                                            $commission->idbeneficiaire = $user->id;
+                                                            $commission->type = "Mensuelle";
+                                                            $commission->prix = $pts[1] - $pts[0];
+                                                            $commission->save();
+                                                        }
+
+                                        } // endif
+
+
+                    
+  
+        } // endif
+    }// endforeach 
+} 
+        return response()->json("done", 200);
+            
+
+    }
+    
 }

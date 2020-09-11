@@ -13,6 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/user_service */ "./resources/js/services/user_service.js");
 /* harmony import */ var _services_dashboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/dashboard */ "./resources/js/services/dashboard.js");
+/* harmony import */ var _services_commission_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/commission_service */ "./resources/js/services/commission_service.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -75,6 +76,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "dashboard",
   data: function data() {
@@ -122,6 +124,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return GetStat;
+    }(),
+    Mensuelle: function () {
+      var _Mensuelle = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return _services_commission_service__WEBPACK_IMPORTED_MODULE_3__["getCommissionsMensuelle"]();
+
+              case 3:
+                response = _context2.sent;
+                //this.stats = response.data;
+                //console.log(this.stats);
+                this.flashMessage.success({
+                  message: 'Mis a jour des commessions Mensuelle',
+                  time: 5000
+                });
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(' ' + _context2.t0, _context2.t0.response.status);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function Mensuelle() {
+        return _Mensuelle.apply(this, arguments);
+      }
+
+      return Mensuelle;
     }()
   }
 });
@@ -261,7 +304,13 @@ var render = function() {
             )
           ])
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-secondary", on: { click: _vm.Mensuelle } },
+        [_vm._v("Calculer commission mensuelle")]
+      )
     ])
   ])
 }
@@ -310,6 +359,44 @@ var staticRenderFns = [
 render._withStripped = true
 
 
+
+/***/ }),
+
+/***/ "./resources/js/services/commission_service.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/services/commission_service.js ***!
+  \*****************************************************/
+/*! exports provided: getUserCommissions, loadMoreUserCommission, loadMore, getUserCommissionsAll, getCommissionsAll, getCommissionsMensuelle */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserCommissions", function() { return getUserCommissions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadMoreUserCommission", function() { return loadMoreUserCommission; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadMore", function() { return loadMore; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserCommissionsAll", function() { return getUserCommissionsAll; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCommissionsAll", function() { return getCommissionsAll; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCommissionsMensuelle", function() { return getCommissionsMensuelle; });
+/* harmony import */ var _services_http_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/http_service */ "./resources/js/services/http_service.js");
+
+function getUserCommissions(id) {
+  return Object(_services_http_service__WEBPACK_IMPORTED_MODULE_0__["httpFile"])().get("commissions/user/".concat(id));
+}
+function loadMoreUserCommission(id, page) {
+  return Object(_services_http_service__WEBPACK_IMPORTED_MODULE_0__["httpFile"])().get("commissions/user/".concat(id, "?page=").concat(page));
+}
+function loadMore(page) {
+  return Object(_services_http_service__WEBPACK_IMPORTED_MODULE_0__["http"])().get("api/commissions?page=".concat(page));
+}
+function getUserCommissionsAll(id) {
+  return Object(_services_http_service__WEBPACK_IMPORTED_MODULE_0__["httpFile"])().get("commissions/user/all/".concat(id));
+}
+function getCommissionsAll() {
+  return Object(_services_http_service__WEBPACK_IMPORTED_MODULE_0__["httpFile"])().get('/commissions');
+}
+function getCommissionsMensuelle() {
+  return Object(_services_http_service__WEBPACK_IMPORTED_MODULE_0__["httpFile"])().get('/cm');
+}
 
 /***/ }),
 

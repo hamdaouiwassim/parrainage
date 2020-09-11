@@ -47,7 +47,7 @@
                             </div>
                         </div>
                        
-                        
+                        <button class="btn btn-secondary" v-on:click="Mensuelle">Calculer commission mensuelle</button>
                     </div>
                 </main>
             
@@ -55,6 +55,7 @@
 <script>
 import * as user from '../services/user_service'
 import * as dashService from '../services/dashboard'
+import * as commService from '../services/commission_service'
 export default {
      name: "dashboard",
     data() {
@@ -77,6 +78,21 @@ export default {
                 console.log(' '+error,error.response.status)
             }
         },
+
+        Mensuelle: async function (){
+               try {
+                const response = await commService.getCommissionsMensuelle();
+                //this.stats = response.data;
+                //console.log(this.stats);
+                  this.flashMessage.success({
+                            message: 'Mis a jour des commessions Mensuelle',
+                            time : 5000
+                        });
+            } catch (error) {
+                console.log(' '+error,error.response.status)
+            }
+            
+        }
       
         
 
